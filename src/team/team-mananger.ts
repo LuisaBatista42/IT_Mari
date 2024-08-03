@@ -1,4 +1,4 @@
-import { MAX_TEAMS } from "../constants";
+import { INITIAL_SCORE, MAX_TEAMS } from "../constants";
 import Team from "./team";
 
 class TeamManager {
@@ -6,7 +6,9 @@ class TeamManager {
 
   public registerTeam(name: string, warCry: string, foundationYear: Date) {
     if (this.teams.length < MAX_TEAMS) {
-      this.teams.push({ name, warCry, foundationYear });
+      this.teams.push({ name, warCry, foundationYear, scores: INITIAL_SCORE });
+    } else {
+      console.log("FULL HOUSE")
     }
   }
 
