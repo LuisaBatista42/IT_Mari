@@ -24,6 +24,15 @@ function pairMatchup(teams: Team[]) {
 // favoritismo ? -> -1 até 1 onde -1 é away team mais chance
 
 
+function solveDuos(duos: Match[], teams: Team[]){
+    duos.forEach(match => {
+        teams[match.homeTeamIndex]
+    });
+}
+
+
+
+
 export default function app() {
     teamManager.registerTeam("A", "AAAAA", new Date());
     teamManager.registerTeam("B", "BEEEE", new Date());
