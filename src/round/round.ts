@@ -8,6 +8,6 @@ export default interface Round {
   roundSkipers: Team[];
 
   matches: Match[];
-  winners?: Team[];
-  losers?: Team[];
+  winners: Team[];
+  losers: Team[];
 }

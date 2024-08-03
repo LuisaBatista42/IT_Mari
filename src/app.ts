@@ -23,7 +23,7 @@ function nextStep(teams: Team[]) {
   let round: Round | undefined; 
   let winners = 0;
   let competitors = teams.slice();
-  
+
   while (winners != 1) {
     round = roundResolver.generateRound(competitors);
     round = roundResolver.playRound(round);
