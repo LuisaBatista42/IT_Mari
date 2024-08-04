@@ -9,15 +9,14 @@ class RoundResolver {
     console.log(teams.length)
     let numberOfTeams = teams.length;
     let roundSkipers = 0;
+    
     if (!isPowerOfTwo(numberOfTeams)){
       roundSkipers = nextPowerOfTwo(numberOfTeams) - numberOfTeams;
-      console.log("round skupers", roundSkipers);
     } 
     
     const teamsForRound = numberOfTeams - roundSkipers;
 
     let teamKeys = generateNumberArray(teamsForRound); //[ 1, 2 ]
-    console.log("teamskeys", teamKeys)
 
     return this.create(
       numberOfTeams,
@@ -43,29 +42,9 @@ class RoundResolver {
     } as Round;
   }
 
-  public playRound(round: Round): Round {
-    round.matches.forEach((match) => {
-      console.log(
-        round.competitors[match.homeTeamIndex].name,
-        "vs",
-        round.competitors[match.awayTeamIndex].name
-      );
-
-      round.winners?.push(
-        matchManager.playMatch(
-          round.competitors[match.homeTeamIndex],
-          round.competitors[match.awayTeamIndex]
-        )
-      );
-    });
-
-    return round;
-  }
-
   public getNewCompetitors(round: Round){
     return [...round.winners, ...round.roundSkipers];
   }
 }
-
 
 export let roundResolver = new RoundResolver();

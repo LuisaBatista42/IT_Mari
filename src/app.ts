@@ -1,4 +1,5 @@
 import { MIN_TEAMS } from "./constants";
+import { gameManager } from "./game/game-manager";
 import Match from "./match/match";
 import { matchManager } from "./match/match-manager";
 import Round from "./round/round";
@@ -15,7 +16,7 @@ function validateGameStart(teams: Team[]) {
     console.log("pair matchup:");
     return teams;
   } else {
-    throw new Error("Problema no inicio  do jogo");
+    throw new Error("Initiation problem");
   }
 }
 
@@ -26,7 +27,7 @@ function nextStep(teams: Team[]) {
 
   while (winners != 1) {
     round = roundResolver.generateRound(competitors);
-    round = roundResolver.playRound(round);
+    round = gameManager.playRound(round);
     if (round.winners){
       winners = round.winners?.length;
       competitors = roundResolver.getNewCompetitors(round);
@@ -37,7 +38,7 @@ function nextStep(teams: Team[]) {
 
   console.log("final scores")
   teams.map((competitor) =>
-    console.log(competitor.name, competitor.warCry, competitor.scores)
+    console.log(competitor.name, competitor.warCry, competitor.score.totalScore)
   );
 
 }

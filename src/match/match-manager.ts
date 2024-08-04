@@ -26,10 +26,7 @@ class MatchManager {
   //   return this.duos;
   // }
 
-  public playMatch(home: Team, away: Team) {
-    home.scores += 50;
-    return home;
-  }
+
 }
 
 export let matchManager = new MatchManager();
