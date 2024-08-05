@@ -1,16 +1,14 @@
 import { MIN_TEAMS } from "./constants";
-import { gameManager } from "./match/game-manager";
-import Match from "./match/match";
+import { gameManager } from "./game/game-manager";
 import { matchManager } from "./match/match-manager";
 import Round from "./round/round";
-import { roundResolver } from "./round/round-resolver";
-import { scoreTable } from "./score/score-table";
+import { roundResolver } from "./round/round-manager";
 import Team from "./team/team";
 import { teamManager } from "./team/team-mananger";
-import { getRandomInRange, nextPowerOfTwo } from "./utils";
 
 let winners: Team[] = [];
 
+// game manager?
 function validateGameStart(teams: Team[]) {
   if (teams.length > MIN_TEAMS && teams.length % 2 == 0) {
     console.log("comoçõou:");
@@ -26,21 +24,16 @@ function nextStep(teams: Team[]) {
   let winners = 0;
   let competitors = teams.slice();
 
-  while (winners != 1) {
     round = roundResolver.generateRound(competitors);
-    round = gameManager.playRound(round);
-    if (round.winners){
-      winners = round.winners?.length;
-      competitors = roundResolver.getNewCompetitors(round);
-    } else {
-      throw new Error("No winner found");
-    }
-  }
+    teamManager.registerBlot(round.matches[0]!.homeTeam);
+    matchManager.finishMatch(round.matches[0]);
+    console.log(round.matches[0].winner);
+
 
   console.log("final scores")
   teamManager.sortTeamsByScore(teams);
   teams.map((competitor) =>
-    console.log(competitor.name, competitor.warCry, competitor.score.totalScore)
+    console.log(competitor.name, competitor.warCry, competitor.score.totalScore, competitor.score.totalBlots)
   );
 
 }

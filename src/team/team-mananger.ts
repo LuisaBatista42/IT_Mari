@@ -18,10 +18,14 @@ class TeamManager {
       warCry,
       foundationYear,
       score: {
-        totalScore: INITIAL_SCORE,
+        matchScore: INITIAL_SCORE,
+        matchBlots: 0,
+        matchPlifs: 0,
+        matchAdvrungh: 0,
+        totalScore: 0,
         totalAdvrungh: 0,
         totalBlots: 0,
-        totalPlifs: 0,
+        totalPlifs: 0
       },
     });
   }
@@ -39,6 +43,16 @@ class TeamManager {
 
   public clearTeams(): void {
     this.teams = [];
+  }
+
+  public registerBlot(team: Team) {
+    team.score.matchBlots += 1;
+    team.score.matchScore += 5;
+  }
+
+  public registerPlif(plifed: Team, plifer: Team) {
+    plifed.score.matchScore += 1;
+    plifer.score.matchPlifs += 1;
   }
 }
 

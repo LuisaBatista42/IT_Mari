@@ -4,7 +4,8 @@ import Team from "../team/team";
 import { generateNumberArray, nextPowerOfTwo, isPowerOfTwo } from "../utils";
 import Round from "./round";
 
-class RoundResolver {
+class RoundManager {
+
   public generateRound(teams: Team[]):Round {
     console.log(teams.length)
     let numberOfTeams = teams.length;
@@ -15,18 +16,18 @@ class RoundResolver {
     } 
     
     const teamsForRound = numberOfTeams - roundSkipers;
-
     let teamKeys = generateNumberArray(teamsForRound); //[ 1, 2 ]
 
-    return this.create(
+
+    return this.createRound(
       numberOfTeams,
       teams,
       roundSkipers,
-      matchManager.createMatchs(teamKeys)
+      matchManager.createMatchs(teamKeys, teams)
     );
   }
 
-  public create(
+  public createRound(
     numberOfTeams: number,
     teams: Team[],
     roundSkipers: number,
@@ -47,4 +48,4 @@ class RoundResolver {
   }
 }
 
-export let roundResolver = new RoundResolver();
+export let roundResolver = new RoundManager();

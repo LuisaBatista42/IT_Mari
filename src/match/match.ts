@@ -1,4 +1,8 @@
+import Team from "../team/team";
+
 export default interface Match {
-  homeTeamIndex: number;
-  awayTeamIndex: number;
+  homeTeam: Team;
+  awayTeam: Team;
+  winner?: Team;
+  played: boolean;
 }
