@@ -4,9 +4,13 @@ import Team from "./team";
 class TeamManager {
   private teams: Team[] = [];
 
-  public registerTeam(name: string, warCry: string, foundationYear: Date): void {
+  public registerTeam(
+    name: string,
+    warCry: string,
+    foundationYear: Date
+  ): void {
     if (this.teams.length > MAX_TEAMS) {
-      throw new Error("FULL HOUSE");    
+      throw new Error("FULL HOUSE");
     }
 
     this.teams.push({
@@ -20,6 +24,13 @@ class TeamManager {
         totalPlifs: 0,
       },
     });
+  }
+
+  public sortTeamsByScore(teams: Team[]): Team[] {
+    teams.sort(
+      (teamA, teamB) => teamB.score.totalScore - teamA.score.totalScore
+    );
+    return teams;
   }
 
   public getTeams(): Team[] {

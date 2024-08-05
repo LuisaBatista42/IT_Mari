@@ -1,9 +1,10 @@
 import { MIN_TEAMS } from "./constants";
-import { gameManager } from "./game/game-manager";
+import { gameManager } from "./match/game-manager";
 import Match from "./match/match";
 import { matchManager } from "./match/match-manager";
 import Round from "./round/round";
 import { roundResolver } from "./round/round-resolver";
+import { scoreTable } from "./score/score-table";
 import Team from "./team/team";
 import { teamManager } from "./team/team-mananger";
 import { getRandomInRange, nextPowerOfTwo } from "./utils";
@@ -37,6 +38,7 @@ function nextStep(teams: Team[]) {
   }
 
   console.log("final scores")
+  teamManager.sortTeamsByScore(teams);
   teams.map((competitor) =>
     console.log(competitor.name, competitor.warCry, competitor.score.totalScore)
   );
