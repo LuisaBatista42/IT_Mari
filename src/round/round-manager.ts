@@ -1,15 +1,18 @@
 import Match from "../match/match";
 import { matchManager } from "../match/match-manager";
 import Team from "../team/team";
-import { generateNumberArray, nextPowerOfTwo, isPowerOfTwo } from "../utils";
+import { teamManager } from "../team/team-mananger";
+import { generateNumberArray, nextPowerOfTwo, isPowerOfTwo, getRandomInRange } from "../utils";
 import Round from "./round";
 
 class RoundManager {
 
-  public generateRound(teams: Team[]):Round {
-    console.log(teams.length)
+  // takes an array of teams and creates a unique round with random matchups, returns the new round
+  public advanceRound(teams: Team[]): Round {
     let numberOfTeams = teams.length;
     let roundSkipers = 0;
+
+    if (teams.length > 1) teamManager.chaosSalt(teams);
     
     if (!isPowerOfTwo(numberOfTeams)){
       roundSkipers = nextPowerOfTwo(numberOfTeams) - numberOfTeams;
@@ -17,7 +20,6 @@ class RoundManager {
     
     const teamsForRound = numberOfTeams - roundSkipers;
     let teamKeys = generateNumberArray(teamsForRound); //[ 1, 2 ]
-
 
     return this.createRound(
       numberOfTeams,
@@ -27,6 +29,7 @@ class RoundManager {
     );
   }
 
+  // creates a round with the necessary information and initializes atributes as empty arrays or zeroes
   public createRound(
     numberOfTeams: number,
     teams: Team[],
@@ -43,9 +46,12 @@ class RoundManager {
     } as Round;
   }
 
-  public getNewCompetitors(round: Round){
+  // joins the previous round winners and round skipers teams, returning the array to form a new unique round
+  public getNewCompetitors(round: Round): Team[]{
     return [...round.winners, ...round.roundSkipers];
   }
+
+  
 }
 
-export let roundResolver = new RoundManager();
+export let roundManager = new RoundManager();
