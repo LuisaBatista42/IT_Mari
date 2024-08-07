@@ -31,15 +31,22 @@ class MatchManager {
     return duos;
   }
 
+  // self explanatory really
+  public startMatch(match: Match) {
+    [match.homeTeam, match.awayTeam].forEach((team) => {
+      this.resetMatchPoints(team);
+    });
+  }
+
   // mark a match as finished, by reseting the scores and passing it to the final score atribute
   public finishMatch(match: Match) {
     [match.awayTeam, match.homeTeam].forEach((team) => {
       this.passScore(team);
-      this.resetMatchPoints(team);
+      this.resetMatchPoints(team); // isso passa pra finish round foreach de teams
     });
-    
+
     match.winner = match.homeTeam;
-    if (match.awayTeam.score.matchScore > match.homeTeam.score.matchScore){
+    if (match.awayTeam.score.matchScore > match.homeTeam.score.matchScore) {
       match.winner = match.awayTeam;
     }
 
@@ -59,20 +66,12 @@ class MatchManager {
     team.score.matchPlifs = 0;
     team.score.matchScore = 50;
   }
-  public getMatchScore(match: Match){
+  public getMatchScore(match: Match) {
     const scoreMatch: ScoreMatch = {
       homeMatchScore: match.homeTeam.score.matchScore,
-      awayMatchScore: match.homeTeam.score.matchScore
+      awayMatchScore: match.homeTeam.score.matchScore,
     };
   }
-
-  // self explanatory really x2
-  public startMatch(match: Match) {
-    [match.homeTeam, match.awayTeam].forEach((team) => {
-      this.resetMatchPoints(team);
-    });
-  }
-
 
   // mostlyhelper function for testing TODO: decide if its still needed
   public playMatch(home: Team, away: Team, round: Round) {

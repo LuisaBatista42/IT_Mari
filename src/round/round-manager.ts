@@ -13,11 +13,11 @@ class RoundManager {
     let roundSkipers = 0;
 
     if (teams.length > 1) teamManager.chaosSalt(teams);
-    
-    if (!isPowerOfTwo(numberOfTeams)){
+
+    if (!isPowerOfTwo(numberOfTeams)) {
       roundSkipers = nextPowerOfTwo(numberOfTeams) - numberOfTeams;
-    } 
-    
+    }
+
     const teamsForRound = numberOfTeams - roundSkipers;
     let teamKeys = generateNumberArray(teamsForRound); //[ 1, 2 ]
 
@@ -47,11 +47,9 @@ class RoundManager {
   }
 
   // joins the previous round winners and round skipers teams, returning the array to form a new unique round
-  public getNewCompetitors(round: Round): Team[]{
+  public getNewCompetitors(round: Round): Team[] {
     return [...round.winners, ...round.roundSkipers];
   }
-
-  
 }
 
 export const roundManager = new RoundManager();

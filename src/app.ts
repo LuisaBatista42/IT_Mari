@@ -17,29 +17,7 @@ import { menuManager } from "./menu/start.menu";
 
 let winners: Team[] = [];
 
-// game manager?
 
-function nextStep(teams: Team[]) {
-  let round: Round | undefined;
-  let winners = 0;
-  let competitors = teams.slice();
-
-  while (winners != 1) {
-    round = roundManager.advanceRound(competitors);
-    round = gameManager.playRound(round);
-    if (round.winners) {
-      winners = round.winners?.length;
-      competitors = roundManager.getNewCompetitors(round);
-    } else {
-      throw new Error("No winner found");
-    }
-  }
-
-  console.log("final scores");
-  teams.map((competitor) =>
-    console.log(competitor.name, competitor.warCry, competitor.score.totalScore)
-  );
-}
 
 // caso o campeao por pontos e o campeao do campeonato seja diferente, existe um desempate
 // home team tem vantagens, possibilidade de rejogar com os mesmos times e ter resultados diferentes
@@ -93,10 +71,10 @@ async function startGame(teams: Team[]) {
     `)
     );
   }
-
+  
   // selector.forEach(selec => console.log(selec));
   // selectMatch()
-
+  
   // await playRound();
 }
 function playRound() {}
@@ -204,4 +182,28 @@ async function registerTeam() {
   );
 
   await initMenu();
+}
+
+// game manager?
+
+function nextStep(teams: Team[]) {
+  let round: Round | undefined;
+  let winners = 0;
+  let competitors = teams.slice();
+
+  while (winners != 1) {
+    round = roundManager.advanceRound(competitors);
+    round = gameManager.playRound(round);
+    if (round.winners) {
+      winners = round.winners?.length;
+      competitors = roundManager.getNewCompetitors(round);
+    } else {
+      throw new Error("No winner found");
+    }
+  }
+
+  console.log("final scores");
+  teams.map((competitor) =>
+    console.log(competitor.name, competitor.warCry, competitor.score.totalScore)
+  );
 }
