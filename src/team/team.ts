@@ -3,7 +3,7 @@ import Score from "../score/score";
 export default interface Team {
     name: string;
     warCry: string;
-    foundationYear: Date;
+    foundationYear: string;
     score: Score;
 
     //biggestScore?: number;

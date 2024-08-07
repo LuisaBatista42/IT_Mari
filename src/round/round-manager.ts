@@ -54,4 +54,4 @@ class RoundManager {
   
 }
 
-export let roundManager = new RoundManager();
+export const roundManager = new RoundManager();

@@ -9,7 +9,7 @@ class TeamManager {
   public registerTeam(
     name: string,
     warCry: string,
-    foundationYear: Date
+    foundationYear: string
   ): void {
     this.teams.push({
       name,
@@ -57,7 +57,8 @@ class TeamManager {
     plifer.score.matchPlifs += 1;
   }
 
-  // at any moment, pass a team array to chaosSalt and advrunghs can happen !
+  // at any moment, pass a team array to chaosSalt and advrunghs can happen!
+  // returns an array with the affected teams
   chaosSalt(teams: Team[]): Team[] {
     let advrunghedTeams: Team[] = [];
 
@@ -74,7 +75,6 @@ class TeamManager {
       this.registerAdvrungh(teams[advrunghedTeam]);
       advrunghedTeams.push(teams[advrunghedTeam]);
     }
-    console.log(advrunghedTeams)
     return advrunghedTeams;
   }
 
@@ -89,4 +89,4 @@ class TeamManager {
   }
 }
 
-export let teamManager = new TeamManager();
+export const teamManager = new TeamManager();

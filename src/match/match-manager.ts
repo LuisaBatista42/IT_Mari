@@ -86,4 +86,4 @@ class MatchManager {
   }
 }
 
-export let matchManager = new MatchManager();
+export const matchManager = new MatchManager();

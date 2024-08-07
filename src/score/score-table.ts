@@ -9,4 +9,4 @@ class ScoreTable {
 //   }
 }
 
-export let scoreTable = new ScoreTable();
+export const scoreTable = new ScoreTable();
