@@ -1,10 +1,15 @@
 import Round from "../round/round";
 import ScoreMatch from "../score/score-match";
 import Team from "../team/team";
+import { teamManager } from "../team/team-mananger";
 import { getRandomInRange, nextPowerOfTwo } from "../utils";
 import Match from "./match";
 
 class MatchManager {
+  checkIfAllMatchesPlayed(matches: Match[]) {
+    return matches.every((match) => match.played === true);
+  }
+
   // creates a match with a random duo of teams
   public createMatchs(
     competitorsIndex: number[],
@@ -27,7 +32,9 @@ class MatchManager {
         awayTeam: competitors[awayTeamIndex],
         played: false,
       });
+      console.log(homeTeamIndex, awayTeamIndex);
     }
+    
     return duos;
   }
 
@@ -39,10 +46,9 @@ class MatchManager {
   }
 
   // mark a match as finished, by reseting the scores and passing it to the final score atribute
-  public finishMatch(match: Match) {
+  public finishMatch(match: Match, round: Round) {
     [match.awayTeam, match.homeTeam].forEach((team) => {
       this.passScore(team);
-      this.resetMatchPoints(team); // isso passa pra finish round foreach de teams
     });
 
     match.winner = match.homeTeam;
@@ -61,27 +67,38 @@ class MatchManager {
   }
 
   // self explanatory really
-  private resetMatchPoints(team: Team) {
+  public resetMatchPoints(team: Team) {
     team.score.matchBlots = 0;
     team.score.matchPlifs = 0;
     team.score.matchScore = 50;
   }
-  public getMatchScore(match: Match) {
-    const scoreMatch: ScoreMatch = {
+  public getMatchScore(match: Match): ScoreMatch {
+    return {
       homeMatchScore: match.homeTeam.score.matchScore,
-      awayMatchScore: match.homeTeam.score.matchScore,
+      awayMatchScore: match.awayTeam.score.matchScore,
     };
   }
 
-  // mostlyhelper function for testing TODO: decide if its still needed
-  public playMatch(home: Team, away: Team, round: Round) {
-    home.score.totalScore += 50;
+  // plays what the player choose
+  public playMatch(option: string, match: Match, round: Round) {
+    switch (option) {
+      case "home-blot":
+        teamManager.registerBlot(match.homeTeam);
+        break;
+      case "away-blot":
+        teamManager.registerBlot(match.awayTeam);
+        break;
+      case "home-plif":
+        teamManager.registerPlif(match.awayTeam, match.homeTeam);
+        break;
+      case "away-plif":
+        teamManager.registerPlif(match.homeTeam, match.awayTeam);
+        break;
+      default:
+        break;
+    }
 
     // TODO: substitute these lines with some other thing
-    const winner = home;
-
-    round.winners.push(winner);
-    return home;
   }
 }
 

@@ -80,6 +80,7 @@ class TeamManager {
 
   // register a advrungh for a team
   public registerAdvrungh(team: Team) {
+    if (!team) return;
     team.score.totalAdvrungh += 1;
     if (team.score.totalScore > 10) {
       team.score.totalScore -= 10;

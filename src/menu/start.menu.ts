@@ -63,7 +63,7 @@ class MenuManager {
         ...option,
       ],
     });
-
+    
     switch (menu) {
       case "register-team":
         await this.registerTeam();

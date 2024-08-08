@@ -2,11 +2,15 @@ import Match from "../match/match";
 import { matchManager } from "../match/match-manager";
 import Team from "../team/team";
 import { teamManager } from "../team/team-mananger";
-import { generateNumberArray, nextPowerOfTwo, isPowerOfTwo, getRandomInRange } from "../utils";
+import {
+  generateNumberArray,
+  nextPowerOfTwo,
+  isPowerOfTwo,
+  getRandomInRange,
+} from "../utils";
 import Round from "./round";
 
 class RoundManager {
-
   // takes an array of teams and creates a unique round with random matchups, returns the new round
   public advanceRound(teams: Team[]): Round {
     let numberOfTeams = teams.length;
@@ -21,6 +25,7 @@ class RoundManager {
     const teamsForRound = numberOfTeams - roundSkipers;
     let teamKeys = generateNumberArray(teamsForRound); //[ 1, 2 ]
 
+    teams.forEach((team) => matchManager.resetMatchPoints(team)); // isso passa pra finish round foreach de teams
     return this.createRound(
       numberOfTeams,
       teams,
@@ -48,6 +53,8 @@ class RoundManager {
 
   // joins the previous round winners and round skipers teams, returning the array to form a new unique round
   public getNewCompetitors(round: Round): Team[] {
+    console.error(round.winners);
+    console.error(round.roundSkipers);
     return [...round.winners, ...round.roundSkipers];
   }
 }
