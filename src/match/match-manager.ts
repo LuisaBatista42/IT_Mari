@@ -46,17 +46,18 @@ class MatchManager {
   }
 
   // mark a match as finished, by reseting the scores and passing it to the final score atribute
-  public finishMatch(match: Match, round: Round) {
+  // returns winning team
+  public finishMatch(match: Match): Team {
     [match.awayTeam, match.homeTeam].forEach((team) => {
       this.passScore(team);
     });
-
+    // TODO empateee
     match.winner = match.homeTeam;
-    if (match.awayTeam.score.matchScore > match.homeTeam.score.matchScore) {
+    if (match.awayTeam.score.matchScore != match.homeTeam.score.matchScore) {
       match.winner = match.awayTeam;
-    }
-
+    } 
     match.played = true;
+    return match.winner;
   }
 
   // pass score and stats to total score and stats
@@ -72,6 +73,7 @@ class MatchManager {
     team.score.matchPlifs = 0;
     team.score.matchScore = 50;
   }
+
   public getMatchScore(match: Match): ScoreMatch {
     return {
       homeMatchScore: match.homeTeam.score.matchScore,

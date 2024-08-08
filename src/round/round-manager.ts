@@ -15,17 +15,14 @@ class RoundManager {
   public advanceRound(teams: Team[]): Round {
     let numberOfTeams = teams.length;
     let roundSkipers = 0;
-
-    if (teams.length > 1) teamManager.chaosSalt(teams);
-
     if (!isPowerOfTwo(numberOfTeams)) {
       roundSkipers = nextPowerOfTwo(numberOfTeams) - numberOfTeams;
     }
 
     const teamsForRound = numberOfTeams - roundSkipers;
+
     let teamKeys = generateNumberArray(teamsForRound); //[ 1, 2 ]
 
-    teams.forEach((team) => matchManager.resetMatchPoints(team)); // isso passa pra finish round foreach de teams
     return this.createRound(
       numberOfTeams,
       teams,
@@ -44,7 +41,7 @@ class RoundManager {
     return {
       numberOfTeams,
       competitors: teams,
-      roundSkipers: teams.splice(0, roundSkipers),
+      roundSkipers: teams.splice(numberOfTeams-roundSkipers, roundSkipers),
       matches: matches,
       winners: [],
       losers: [],
@@ -53,8 +50,6 @@ class RoundManager {
 
   // joins the previous round winners and round skipers teams, returning the array to form a new unique round
   public getNewCompetitors(round: Round): Team[] {
-    console.error(round.winners);
-    console.error(round.roundSkipers);
     return [...round.winners, ...round.roundSkipers];
   }
 }

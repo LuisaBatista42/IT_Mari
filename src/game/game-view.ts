@@ -3,8 +3,7 @@ import Round from "../round/round";
 import Match from "../match/match";
 
 class GameView {
-
-    public async playMatchMenu(match: Match) {
+  public async playMatchMenu(match: Match) {
     // print match info
     return await select({
       message: `Começa partida
@@ -34,13 +33,31 @@ class GameView {
       ],
     });
   }
+  public async roundOverview(round: Round) {
+    console.warn("Competidores do round:");
+    round.competitors.forEach((competitor, index) =>
+      console.info(index, competitor.name)
+    );
+    console.warn("----------------\t ----------------");
+
+    console.warn("Partidas do round:");
+    round.matches.forEach((match, index) =>
+      console.info(index, match.homeTeam.name, "vs", match.awayTeam.name)
+    );
+    console.warn("----------------\t ----------------");
+
+    if (round.roundSkipers.length) {
+      console.warn("Jogadores que pulam a rodada:");
+      round.roundSkipers.forEach((roundSkiper, index) =>
+        console.info(index, roundSkiper.name)
+      );
+      console.warn("----------------\t ----------------");
+    }
+  }
 }
 
 export const gameView = new GameView();
 
-//   public async roundOverview(round: Round) {
-//   // TODO printa round
-//   round.matches.forEach((match) => playMatch(match));
-// printWinner
+// TODO printWinnerTable
 
-// printAdvrungh
+// TODO printAdvrungh

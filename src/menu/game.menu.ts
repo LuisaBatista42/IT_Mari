@@ -14,7 +14,6 @@ class GameMenu {
   public startRound(matchIndex: number, round: Round) {}
 
   public async startGame(teams: Team[]) {
-
     let competitors = teams.slice();
     let round: Round | undefined;
     let winners = 0;
@@ -37,7 +36,9 @@ class GameMenu {
           );
 
           if (matchMenuOption == "leave") {
-            matchManager.finishMatch(round.matches[selectedMatch], round);
+            round.winners.push(
+              matchManager.finishMatch(round.matches[selectedMatch])
+            );
             break;
           }
 
@@ -48,20 +49,13 @@ class GameMenu {
           );
         }
       }
+      winners = round.winners?.length;
 
-      if (round.winners) {
-        // round.winners.forEach((winner) =>
-        //   console.log(winner.name, winner.score.totalScore)
-        // );
-        winners = round.winners?.length;
         competitors = roundManager.getNewCompetitors(round);
-        competitors.forEach(cimp => console.warn(cimp.name))
         teamManager.chaosSalt(competitors); // mostrar na tela
-      }
     }
 
- 
-    console.warn("acabouu")
+    console.warn("acabouu");
   }
 
   // show
